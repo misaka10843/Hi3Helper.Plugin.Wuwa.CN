@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi3Helper.Plugin.Wuwa", "Hi3Helper.Plugin.Wuwa\Hi3Helper.Plugin.Wuwa.csproj", "{925B92CD-CB85-4566-BD5F-3D681A938898}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi3Helper.Plugin.Core", "Hi3Helper.Plugin.Core\Hi3Helper.Plugin.Core.csproj", "{FEA4778B-63D1-4DD7-8C91-1AF7C70EEA19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Indexer", "Indexer\Indexer.csproj", "{958B55B1-BE89-4450-BABF-6383F1502E06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginTest", "Hi3Helper.Plugin.Core\PluginTest\PluginTest.csproj", "{46A62AB4-3056-4E3B-9786-CBC3A9101B77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,17 @@ Global
 		{925B92CD-CB85-4566-BD5F-3D681A938898}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{925B92CD-CB85-4566-BD5F-3D681A938898}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{925B92CD-CB85-4566-BD5F-3D681A938898}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEA4778B-63D1-4DD7-8C91-1AF7C70EEA19}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{FEA4778B-63D1-4DD7-8C91-1AF7C70EEA19}.Debug|Any CPU.Build.0 = Debug|x64
+		{FEA4778B-63D1-4DD7-8C91-1AF7C70EEA19}.Release|Any CPU.ActiveCfg = Release|x64
+		{FEA4778B-63D1-4DD7-8C91-1AF7C70EEA19}.Release|Any CPU.Build.0 = Release|x64
+		{958B55B1-BE89-4450-BABF-6383F1502E06}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{958B55B1-BE89-4450-BABF-6383F1502E06}.Debug|Any CPU.Build.0 = Debug|x64
+		{958B55B1-BE89-4450-BABF-6383F1502E06}.Release|Any CPU.ActiveCfg = Release|x64
+		{958B55B1-BE89-4450-BABF-6383F1502E06}.Release|Any CPU.Build.0 = Release|x64
+		{46A62AB4-3056-4E3B-9786-CBC3A9101B77}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{46A62AB4-3056-4E3B-9786-CBC3A9101B77}.Debug|Any CPU.Build.0 = Debug|x64
+		{46A62AB4-3056-4E3B-9786-CBC3A9101B77}.Release|Any CPU.ActiveCfg = Release|x64
+		{46A62AB4-3056-4E3B-9786-CBC3A9101B77}.Release|Any CPU.Build.0 = Release|x64
 	EndGlobalSection
 EndGlobal
