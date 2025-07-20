@@ -1,9 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Platforms>x64</Platforms>
+		<InvariantGlobalization>true</InvariantGlobalization>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<DebugType>embedded</DebugType>
+		<Deterministic>true</Deterministic>
+		<LangVersion>preview</LangVersion>
+		<AssemblyName>main</AssemblyName>
+		<ProductName>Wuthering Waves Plugin</ProductName>
+		<Product>Collapse</Product>
+		<Description>This library is a plugin for adding support for the game "Wuthering Waves" into Collapse Launcher</Description>
+		<AssemblyTitle>Heaven Burns Red Plugin</AssemblyTitle>
+		<Company>Collapse Launcher Team</Company>
+		<Authors>$(Company). neon-nyan, Cry0, bagusnl, shatyuka, gablm.</Authors>
+		<Copyright>Copyright 2022-2025 $(Company)</Copyright>
+		<Version>0.7.0</Version>
+		<ApplicationIcon>icon.ico</ApplicationIcon>
+		<DefineConstants>USELIGHTWEIGHTJSONPARSER</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Hi3Helper.Plugin.Core\Hi3Helper.Plugin.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.IO.Hashing" Version="9.0.6" />
+	</ItemGroup>
 
 </Project>
