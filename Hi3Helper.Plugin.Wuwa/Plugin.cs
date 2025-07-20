@@ -11,7 +11,7 @@ using System.Runtime.InteropServices.Marshalling;
 namespace Hi3Helper.Plugin.Wuwa;
 
 [GeneratedComClass]
-public partial class HBRPlugin : PluginBase
+public partial class WuwaPlugin : PluginBase
 {
     private static readonly IPluginPresetConfig[] PresetConfigInstances = [new HBRGlobalPresetConfig()];
     private static DateTime _pluginCreationDate = new(2025, 07, 20, 05, 06, 0, DateTimeKind.Utc);

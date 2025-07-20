@@ -14,11 +14,11 @@
 		<ProductName>Wuthering Waves Plugin</ProductName>
 		<Product>Collapse</Product>
 		<Description>This library is a plugin for adding support for the game "Wuthering Waves" into Collapse Launcher</Description>
-		<AssemblyTitle>Heaven Burns Red Plugin</AssemblyTitle>
+		<AssemblyTitle>Wuthering Waves Plugin</AssemblyTitle>
 		<Company>Collapse Launcher Team</Company>
 		<Authors>$(Company). neon-nyan, Cry0, bagusnl, shatyuka, gablm.</Authors>
 		<Copyright>Copyright 2022-2025 $(Company)</Copyright>
-		<Version>0.7.0</Version>
+		<Version>0.1.0</Version>
 		<ApplicationIcon>icon.ico</ApplicationIcon>
 		<DefineConstants>USELIGHTWEIGHTJSONPARSER</DefineConstants>
 	</PropertyGroup>
