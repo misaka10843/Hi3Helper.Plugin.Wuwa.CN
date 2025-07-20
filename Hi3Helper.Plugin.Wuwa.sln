@@ -1,34 +1,43 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi3Helper.Plugin.Wuwa", "Hi3Helper.Plugin.Wuwa\Hi3Helper.Plugin.Wuwa.csproj", "{925B92CD-CB85-4566-BD5F-3D681A938898}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi3Helper.Plugin.Core", "Hi3Helper.Plugin.Core\Hi3Helper.Plugin.Core.csproj", "{FEA4778B-63D1-4DD7-8C91-1AF7C70EEA19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi3Helper.Plugin.Core", "Hi3Helper.Plugin.Core\Hi3Helper.Plugin.Core.csproj", "{6D56B964-1509-482F-4589-C780CDE5C703}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Indexer", "Indexer\Indexer.csproj", "{958B55B1-BE89-4450-BABF-6383F1502E06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginTest", "Hi3Helper.Plugin.Core\PluginTest\PluginTest.csproj", "{9E58C55F-9D8C-F9CB-F23A-11E336C9D51D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginTest", "Hi3Helper.Plugin.Core\PluginTest\PluginTest.csproj", "{46A62AB4-3056-4E3B-9786-CBC3A9101B77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Indexer", "Indexer\Indexer.csproj", "{0D34F528-5F09-AD5B-9804-C4EE38FACD1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{925B92CD-CB85-4566-BD5F-3D681A938898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{925B92CD-CB85-4566-BD5F-3D681A938898}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{925B92CD-CB85-4566-BD5F-3D681A938898}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{925B92CD-CB85-4566-BD5F-3D681A938898}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FEA4778B-63D1-4DD7-8C91-1AF7C70EEA19}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{FEA4778B-63D1-4DD7-8C91-1AF7C70EEA19}.Debug|Any CPU.Build.0 = Debug|x64
-		{FEA4778B-63D1-4DD7-8C91-1AF7C70EEA19}.Release|Any CPU.ActiveCfg = Release|x64
-		{FEA4778B-63D1-4DD7-8C91-1AF7C70EEA19}.Release|Any CPU.Build.0 = Release|x64
-		{958B55B1-BE89-4450-BABF-6383F1502E06}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{958B55B1-BE89-4450-BABF-6383F1502E06}.Debug|Any CPU.Build.0 = Debug|x64
-		{958B55B1-BE89-4450-BABF-6383F1502E06}.Release|Any CPU.ActiveCfg = Release|x64
-		{958B55B1-BE89-4450-BABF-6383F1502E06}.Release|Any CPU.Build.0 = Release|x64
-		{46A62AB4-3056-4E3B-9786-CBC3A9101B77}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{46A62AB4-3056-4E3B-9786-CBC3A9101B77}.Debug|Any CPU.Build.0 = Debug|x64
-		{46A62AB4-3056-4E3B-9786-CBC3A9101B77}.Release|Any CPU.ActiveCfg = Release|x64
-		{46A62AB4-3056-4E3B-9786-CBC3A9101B77}.Release|Any CPU.Build.0 = Release|x64
+		{BA302F46-E800-4F4F-B8DA-29939160448D}.Debug|x64.ActiveCfg = Debug|x64
+		{BA302F46-E800-4F4F-B8DA-29939160448D}.Debug|x64.Build.0 = Debug|x64
+		{BA302F46-E800-4F4F-B8DA-29939160448D}.Release|x64.ActiveCfg = Release|x64
+		{BA302F46-E800-4F4F-B8DA-29939160448D}.Release|x64.Build.0 = Release|x64
+		{6D56B964-1509-482F-4589-C780CDE5C703}.Debug|x64.ActiveCfg = Debug|x64
+		{6D56B964-1509-482F-4589-C780CDE5C703}.Debug|x64.Build.0 = Debug|x64
+		{6D56B964-1509-482F-4589-C780CDE5C703}.Release|x64.ActiveCfg = Release|x64
+		{6D56B964-1509-482F-4589-C780CDE5C703}.Release|x64.Build.0 = Release|x64
+		{9E58C55F-9D8C-F9CB-F23A-11E336C9D51D}.Debug|x64.ActiveCfg = Debug|x64
+		{9E58C55F-9D8C-F9CB-F23A-11E336C9D51D}.Debug|x64.Build.0 = Debug|x64
+		{9E58C55F-9D8C-F9CB-F23A-11E336C9D51D}.Release|x64.ActiveCfg = Release|x64
+		{9E58C55F-9D8C-F9CB-F23A-11E336C9D51D}.Release|x64.Build.0 = Release|x64
+		{0D34F528-5F09-AD5B-9804-C4EE38FACD1C}.Debug|x64.ActiveCfg = Debug|x64
+		{0D34F528-5F09-AD5B-9804-C4EE38FACD1C}.Debug|x64.Build.0 = Debug|x64
+		{0D34F528-5F09-AD5B-9804-C4EE38FACD1C}.Release|x64.ActiveCfg = Release|x64
+		{0D34F528-5F09-AD5B-9804-C4EE38FACD1C}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53445DBD-9B1F-43CB-866B-884C02F96972}
 	EndGlobalSection
 EndGlobal
