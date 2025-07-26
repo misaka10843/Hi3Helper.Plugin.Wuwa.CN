@@ -1,11 +1,15 @@
 ﻿using Hi3Helper.Plugin.Core;
 using Hi3Helper.Plugin.Core.Management.Api;
+using Hi3Helper.Plugin.Core.Utility;
 using Hi3Helper.Plugin.Wuwa.Utils;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
-
+using System.Threading;
+using System.Threading.Tasks;
 namespace Hi3Helper.Plugin.Wuwa.Management.Api;
 
 [GeneratedComClass]
@@ -18,7 +22,7 @@ internal partial class WuwaGlobalLauncherApiMedia(string apiResponseBaseUrl, str
     }
 
     [field: AllowNull, MaybeNull]
-    protected HttpClient ApiDownloadClient
+    protected HttpClient ApiDownloadHttpClient
     {
         get => field ??= WuwaUtils.CreateApiHttpClient(apiResponseBaseUrl, gameTag, AuthenticationHash, ApiOptions);
         set;
@@ -62,18 +66,55 @@ internal partial class WuwaGlobalLauncherApiMedia(string apiResponseBaseUrl, str
     }
 
     public override void GetBackgroundFlag(out LauncherBackgroundFlag result)
-    {
-        throw new NotImplementedException();
-    }
+        => result = LauncherBackgroundFlag.TypeIsVideo | LauncherBackgroundFlag.TypeIsImage;
 
     public override void GetLogoFlag(out LauncherBackgroundFlag result)
-    {
-        throw new NotImplementedException();
-    }
+        => result = LauncherBackgroundFlag.None;
 
     public override void GetLogoOverlayEntries(out nint handle, out int count, out bool isDisposable, out bool isAllocated)
     {
-        throw new NotImplementedException();
+        isDisposable = false;
+        handle = nint.Zero;
+        count = 0;
+        isAllocated = false;
+    }
+
+    protected override async Task<int> InitAsync(CancellationToken token)
+    {
+        using HttpResponseMessage response = await ApiDownloadHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, ApiDownloadHttpClient.BaseAddress), token);
+        response.EnsureSuccessStatusCode();
+        
+#if USELIGHTWEIGHTJSONPARSER
+        await using Stream networkStream = await response.Content.ReadAsStreamAsync(token);
+        ApiResponse = await WuwaApiResponse<WuwaApiResponseMedia>.ParseFromAsync(networkStream, token: token);
+#else
+        string jsonResponse = await message.Content.ReadAsStringAsync(token);
+        SharedStatic.InstanceLogger.LogTrace("API Media response: {JsonResponse}", jsonResponse);
+        ApiResponse = JsonSerializer.Deserialize<HBRApiResponse<HBRApiResponseMedia>>(jsonResponse, HBRApiResponseContext.Default.HBRApiResponseHBRApiResponseMedia);
+#endif
+        // We don't have a way to check if the API response is valid, so we assume it is valid if we reach this point.
+        return 0;
+    }
+
+    protected override async Task DownloadAssetAsyncInner(HttpClient? client, string fileUrl, Stream outputStream,
+        PluginDisposableMemory<byte> fileChecksum, PluginFiles.FileReadProgressDelegate? downloadProgress, CancellationToken token)
+    {
+        await base.DownloadAssetAsyncInner(ApiResponseHttpClient, fileUrl, outputStream, fileChecksum, downloadProgress, token);
+    }
+
+    public override void Dispose()
+    {
+        if (IsDisposed)
+            return;
+        
+        using (ThisInstanceLock.EnterScope())
+        {
+            ApiResponseHttpClient?.Dispose();
+            ApiDownloadHttpClient?.Dispose();
+            
+            ApiResponse = null;
+            base.Dispose();
+        }
     }
 }
 
