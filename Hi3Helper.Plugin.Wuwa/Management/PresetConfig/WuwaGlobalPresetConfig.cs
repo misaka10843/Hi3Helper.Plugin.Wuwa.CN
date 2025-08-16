@@ -1,4 +1,4 @@
-﻿using Hi3Helper.Plugin.Core.Management;
+using Hi3Helper.Plugin.Core.Management;
 using Hi3Helper.Plugin.Core.Management.Api;
 using Hi3Helper.Plugin.Core.Management.PresetConfig;
 using Hi3Helper.Plugin.Core.Utility.Windows;
@@ -18,6 +18,7 @@ namespace Hi3Helper.Plugin.Wuwa.Management.PresetConfig
         private const string CurrentUninstKey = "";
         private const string CurrentTag = "G153";
         private const string CurrentPatchHash = "VlNTU1c8DAEsKzslESUCDRIQAiomLA4WKBEMIAABOQgyMSEgVAA";
+        private const string Hash1 = "VxvH4SpEIzJaYhAODsY2Yjw1TyCrdm0t";
         private const string ExecutableName = "WutheringWaves.exe";
         private const string VendorName = "Kuro Games";
 
@@ -69,11 +70,14 @@ namespace Hi3Helper.Plugin.Wuwa.Management.PresetConfig
 
         public override ILauncherApiMedia? LauncherApiMedia 
         {
-            get => field ??= new WuwaGlobalLauncherApiMedia(ApiResponseUrl, CurrentTag, CurrentPatchHash, "news");
+            get => field ??= new WuwaGlobalLauncherApiMedia(ApiResponseUrl, CurrentTag, CurrentPatchHash, "bg", Hash1);
             set;
         }
-        public override ILauncherApiNews? LauncherApiNews { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override IGameManager? GameManager { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override IGameInstaller? GameInstaller { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    }
+
+        public override ILauncherApiNews? LauncherApiNews
+        {
+            get => field ??= new WuwaGlobalLauncherApiNews(ApiResponseUrl, CurrentTag, CurrentPatchHash, "news");
+            set => throw new NotImplementedException();
+        }
+
 }

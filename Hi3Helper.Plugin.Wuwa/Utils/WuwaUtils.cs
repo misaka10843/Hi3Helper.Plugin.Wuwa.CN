@@ -13,10 +13,10 @@ namespace Hi3Helper.Plugin.Wuwa.Utils;
 
 internal static class WuwaUtils
 {
-    internal static HttpClient CreateApiHttpClient(string? apiBaseUrl = null, string? gameTag = null, string? authCdnToken = "", string? apiOptions = "")
-        => CreateApiHttpClientBuilder(gameTag, authCdnToken, apiOptions).Create();
+    internal static HttpClient CreateApiHttpClient(string? apiBaseUrl = null, string? gameTag = null, string? authCdnToken = "", string? apiOptions = "", string? hash1 = "")
+        => CreateApiHttpClientBuilder(gameTag, authCdnToken, apiOptions, null, hash1).Create();
 
-    internal static PluginHttpClientBuilder CreateApiHttpClientBuilder(string? apiBaseUrl, string? gameTag = null, string? authCdnToken= "", string? accessOption = null)
+    internal static PluginHttpClientBuilder CreateApiHttpClientBuilder(string? apiBaseUrl, string? gameTag = null, string? authCdnToken= "", string? accessOption = null, string? hash1 = "")
     {
         PluginHttpClientBuilder builder = new PluginHttpClientBuilder()
             .SetUserAgent($"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36");
@@ -39,7 +39,13 @@ internal static class WuwaUtils
         switch (accessOption)
         {
             case "news":
-                builder.SetBaseUrl(apiBaseUrl + "launcher/" + authCdnToken + "/" + gameTag + "/" + "information/" + "en.json");
+                builder.SetBaseUrl(apiBaseUrl + "launcher/" + authCdnToken + "/" + gameTag + "/" + "information/en.json");
+                break;
+            case "bg":
+                builder.SetBaseUrl(apiBaseUrl + "launcher/" + authCdnToken + "/" + gameTag + "/background/" + hash1 + "/en.json");
+                break;
+            case "media":
+                builder.SetBaseUrl(apiBaseUrl + "launcher/" + gameTag + "/" + authCdnToken + "/social/en.json");
                 break;
             default:
                 break;
@@ -49,7 +55,7 @@ internal static class WuwaUtils
 #if DEBUG
         SharedStatic.InstanceLogger.LogTrace("Created HttpClient with Token: {}", authCdnToken);
 #endif
-        builder.AddHeader("Host", "prod-alicdn-gamestarter.kurogame.com");
+        builder.AddHeader("Host", apiBaseUrl.Substring(7, apiBaseUrl.IndexOf('/', 8) - 7)); // exclude "https://"
         builder.AddHeader("Accept-Encoding", "gzip");
 
         // Enforce gzip decompression for responses
