@@ -13,18 +13,18 @@ using System.Threading.Tasks;
 namespace Hi3Helper.Plugin.Wuwa.Management.Api;
 
 [GeneratedComClass]
-internal partial class WuwaGlobalLauncherApiMedia(string apiResponseBaseUrl, string gameTag, string AuthenticationHash, string ApiOptions) : LauncherApiMediaBase
+internal partial class WuwaGlobalLauncherApiMedia(string apiResponseBaseUrl, string gameTag, string authenticationHash, string apiOptions) : LauncherApiMediaBase
 {
     [field: AllowNull, MaybeNull]
     protected override HttpClient ApiResponseHttpClient { 
-        get => field ??= WuwaUtils.CreateApiHttpClient(apiResponseBaseUrl, gameTag, AuthenticationHash, ApiOptions);
+        get => field ??= WuwaUtils.CreateApiHttpClient(apiResponseBaseUrl, gameTag, authenticationHash, apiOptions);
         set;
     }
 
     [field: AllowNull, MaybeNull]
     protected HttpClient ApiDownloadHttpClient
     {
-        get => field ??= WuwaUtils.CreateApiHttpClient(apiResponseBaseUrl, gameTag, AuthenticationHash, ApiOptions);
+        get => field ??= WuwaUtils.CreateApiHttpClient(apiResponseBaseUrl, gameTag, authenticationHash, apiOptions);
         set;
     }
 
