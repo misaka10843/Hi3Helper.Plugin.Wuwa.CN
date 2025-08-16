@@ -8,16 +8,19 @@ using System.IO;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+
 namespace Hi3Helper.Plugin.Wuwa.Management.Api;
 
 [GeneratedComClass]
-internal partial class WuwaGlobalLauncherApiMedia(string apiResponseBaseUrl, string gameTag, string authenticationHash, string apiOptions) : LauncherApiMediaBase
+internal partial class WuwaGlobalLauncherApiMedia(string apiResponseBaseUrl, string gameTag, string authenticationHash, string apiOptions, string hash1) : LauncherApiMediaBase
 {
     [field: AllowNull, MaybeNull]
     protected override HttpClient ApiResponseHttpClient { 
-        get => field ??= WuwaUtils.CreateApiHttpClient(apiResponseBaseUrl, gameTag, authenticationHash, apiOptions);
+        get => field ??= WuwaUtils.CreateApiHttpClient(apiResponseBaseUrl, gameTag, authenticationHash, apiOptions, hash1);
         set;
     }
 
@@ -28,7 +31,7 @@ internal partial class WuwaGlobalLauncherApiMedia(string apiResponseBaseUrl, str
         set;
     }
 
-    //protected override string ApiResponseBaseUrl { get; } = apiResponseBaseUrl;
+    protected override string ApiResponseBaseUrl { get; } = apiResponseBaseUrl;
     private WuwaApiResponse<WuwaApiResponseMedia>? ApiResponse { get; set; }
 
     public override void GetBackgroundEntries(out nint handle, out int count, out bool isDisposable, out bool isAllocated)
@@ -88,9 +91,9 @@ internal partial class WuwaGlobalLauncherApiMedia(string apiResponseBaseUrl, str
         await using Stream networkStream = await response.Content.ReadAsStreamAsync(token);
         ApiResponse = await WuwaApiResponse<WuwaApiResponseMedia>.ParseFromAsync(networkStream, token: token);
 #else
-        string jsonResponse = await message.Content.ReadAsStringAsync(token);
+        string jsonResponse = await response.Content.ReadAsStringAsync(token);
         SharedStatic.InstanceLogger.LogTrace("API Media response: {JsonResponse}", jsonResponse);
-        ApiResponse = JsonSerializer.Deserialize<HBRApiResponse<HBRApiResponseMedia>>(jsonResponse, HBRApiResponseContext.Default.HBRApiResponseHBRApiResponseMedia);
+        ApiResponse = JsonSerializer.Deserialize<WuwaApiResponse<WuwaApiResponseMedia>>(jsonResponse, WuwaApiResponseContext.Default.WuwaApiResponseWuwaApiResponseMedia);
 #endif
         // We don't have a way to check if the API response is valid, so we assume it is valid if we reach this point.
         return 0;

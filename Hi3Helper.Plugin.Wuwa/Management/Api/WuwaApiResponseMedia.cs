@@ -2,6 +2,7 @@
 using Hi3Helper.Plugin.Core.Utility.Json.Converters;
 using System.Text.Json.Serialization;
 #else
+using System;
 using System.Text.Json;
 using Hi3Helper.Plugin.Core.Utility.Json;
 #endif
