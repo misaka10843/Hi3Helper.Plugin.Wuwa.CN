@@ -76,7 +76,7 @@ namespace Hi3Helper.Plugin.Wuwa.Management.PresetConfig
 
         public override ILauncherApiNews? LauncherApiNews
         {
-            get => field ??= new WuwaGlobalLauncherApiNews(ApiResponseUrl, CurrentTag, CurrentPatchHash, "news");
+            get => field ??= new WuwaGlobalLauncherApiNews(ApiResponseUrl, CurrentTag, CurrentPatchHash, "news", Hash1);
             set => throw new NotImplementedException();
         }
 

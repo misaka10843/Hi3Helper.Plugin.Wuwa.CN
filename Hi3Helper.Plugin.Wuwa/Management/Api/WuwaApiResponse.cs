@@ -31,7 +31,19 @@ public class WuwaApiResponse<T>
 #if !USELIGHTWEIGHTJSONPARSER
     [JsonPropertyName("data")]
 #endif
+    public int ReturnCode { get; set; }
     public T? ResponseData { get; set; }
+    
+    public void EnsureSuccessCode()
+    {
+        if (ResponseData == null || ReturnCode != 200) 
+        {
+            throw new HttpRequestException($"API returned unsuccessful code: {ReturnCode}", null, (HttpStatusCode)ReturnCode);
+        }
+        {
+            throw new HttpRequestException("API returned no data", null, HttpStatusCode.InternalServerError);
+        }
+    }
 
 #if USELIGHTWEIGHTJSONPARSER
     public static WuwaApiResponse<T> ParseFrom(Stream stream, bool isDisposeStream = false, JsonDocumentOptions options = default)
