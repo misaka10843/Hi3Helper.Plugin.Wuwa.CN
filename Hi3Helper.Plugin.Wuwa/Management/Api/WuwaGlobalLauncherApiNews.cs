@@ -1,8 +1,3 @@
-using Hi3Helper.Plugin.Core;
-using Hi3Helper.Plugin.Core.Management.Api;
-using Hi3Helper.Plugin.Core.Utility;
-using Hi3Helper.Plugin.Core.Utility.Json;
-using Hi3Helper.Plugin.Wuwa.Utils;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,6 +9,13 @@ using System.Net.Http;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
+using Hi3Helper.Plugin.Core;
+using Hi3Helper.Plugin.Core.Management;
+using Hi3Helper.Plugin.Core.Management.Api;
+using Hi3Helper.Plugin.Core.Utility;
+using Hi3Helper.Plugin.Core.Utility.Json;
+using Hi3Helper.Plugin.Wuwa.Utils;
+
 // ReSharper disable IdentifierTypo
 // ReSharper disable InconsistentNaming
 
@@ -105,20 +107,20 @@ internal partial class WuwaGlobalLauncherApiNews(string apiResponseBaseUrl, stri
         isAllocated  = true;
 
         int memIndex = 0;
-        Write(ApiResponseNewsAndCarousel.NewsData.ContentKindEvent.Contents,  ref memory, ref memIndex);
-        Write(ApiResponseNewsAndCarousel.NewsData.ContentKindNews.Contents,   ref memory, ref memIndex);
-        Write(ApiResponseNewsAndCarousel.NewsData.ContentKindNotice.Contents, ref memory, ref memIndex);
+        Write(ApiResponseNewsAndCarousel.NewsData.ContentKindEvent.Contents,  ref memory, ref memIndex, LauncherNewsEntryType.Event);
+        Write(ApiResponseNewsAndCarousel.NewsData.ContentKindNews.Contents,   ref memory, ref memIndex, LauncherNewsEntryType.Info);
+        Write(ApiResponseNewsAndCarousel.NewsData.ContentKindNotice.Contents, ref memory, ref memIndex, LauncherNewsEntryType.Notice);
 
         return;
 
-        static void Write(Span<WuwaApiResponseNewsEntry> entriesSpan, ref PluginDisposableMemory<LauncherNewsEntry> mem, ref int memOffset)
+        static void Write(Span<WuwaApiResponseNewsEntry> entriesSpan, ref PluginDisposableMemory<LauncherNewsEntry> mem, ref int memOffset, LauncherNewsEntryType type)
         {
             for (int i = 0; i < entriesSpan.Length; i++, memOffset++)
             {
                 ref LauncherNewsEntry unmanagedEntry = ref mem[memOffset];
 
                 WuwaApiResponseNewsEntry entry = entriesSpan[i];
-                unmanagedEntry.Write(entry.NewsTitle, null, entry.ClickUrl, entry.Date);
+                unmanagedEntry.Write(entry.NewsTitle, null, entry.ClickUrl, entry.Date, type);
             }
         }
     }
