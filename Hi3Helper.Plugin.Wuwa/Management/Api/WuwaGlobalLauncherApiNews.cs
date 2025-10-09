@@ -51,7 +51,7 @@ internal partial class WuwaGlobalLauncherApiNews(string apiResponseBaseUrl, stri
     {
         string requestSocialUrl = ApiResponseBaseUrl
                .CombineUrlFromString("launcher",
-                        gameTag,
+                        gameTag.AeonPlsHelpMe(),
                         authenticationHash.AeonPlsHelpMe(),
                         "social",
                         "en.json");
@@ -59,7 +59,7 @@ internal partial class WuwaGlobalLauncherApiNews(string apiResponseBaseUrl, stri
         string requestNewsUrl = ApiResponseBaseUrl
                .CombineUrlFromString("launcher",
                         authenticationHash.AeonPlsHelpMe(),
-                        gameTag,
+                        gameTag.AeonPlsHelpMe(),
                         "information",
                         "en.json");
 

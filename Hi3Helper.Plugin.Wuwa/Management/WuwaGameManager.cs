@@ -187,7 +187,7 @@ internal partial class WuwaGameManager : GameManagerBase
             new(ApiResponseAssetUrl);
         GameResourceBaseUrl = $"https://{ApiResponseAssetUrl.AeonPlsHelpMe()}/launcher/game/" +
                               $"{GameTag.AeonPlsHelpMe()}/{ClientAccess.AeonPlsHelpMe()}/{CurrentPatch}/" +
-                              $"{Hash2.AeonPlsHelpMe()}/resource.json";
+                              $"{Hash2.AeonPlsHelpMe()}/resource/{ClientAccess.AeonPlsHelpMe()}/{CurrentPatch}/indexFile.json";
         
         SharedStatic.InstanceLogger.LogDebug("Game Resource Base URL: {GameResourceBaseUrl}", GameResourceBaseUrl);
 
