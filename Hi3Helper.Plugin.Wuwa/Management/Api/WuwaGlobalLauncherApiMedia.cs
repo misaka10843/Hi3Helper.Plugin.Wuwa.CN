@@ -21,7 +21,7 @@ internal partial class WuwaGlobalLauncherApiMedia(string apiResponseBaseUrl, str
 {
     [field: AllowNull, MaybeNull]
     protected override HttpClient ApiResponseHttpClient { 
-        get => field ??= WuwaUtils.CreateApiHttpClient(ApiResponseBaseUrl, gameTag, authenticationHash, apiOptions, hash1);
+        get => field ??= WuwaUtils.CreateApiHttpClient(ApiResponseBaseUrl, gameTag.AeonPlsHelpMe(), authenticationHash.AeonPlsHelpMe(), apiOptions, hash1.AeonPlsHelpMe());
         set;
     }
 

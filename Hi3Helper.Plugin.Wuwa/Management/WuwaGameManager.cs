@@ -28,36 +28,44 @@ internal partial class WuwaGameManager : GameManagerBase
         string apiResponseAssetUrl,
         string authenticationHash,
         string gameTag,
-        string hash1)
+        string clientAccess,
+        string currentPatch,
+        string hash1,
+        string hash2)
     {
         CurrentGameExecutableByPreset = gameExecutableNameByPreset;
         AuthenticationHash = authenticationHash;
         ApiResponseAssetUrl = apiResponseAssetUrl;
         GameTag = gameTag;
+        ClientAccess = clientAccess;
+        CurrentPatch = currentPatch;
         Hash1 = hash1;
+        Hash2 = hash2;
     }
 
     [field: AllowNull, MaybeNull]
     protected override HttpClient ApiResponseHttpClient
     {
         get => field ??=
-            WuwaUtils.CreateApiHttpClient(ApiResponseAssetUrl, GameTag, AuthenticationHash, ApiOptions, Hash1);
+            WuwaUtils.CreateApiHttpClient(ApiResponseAssetUrl, GameTag, AuthenticationHash, "", Hash1);
         set;
     }
 
     [field: AllowNull, MaybeNull]
-    protected HttpClient ApiDownloadHttpClient
+    private HttpClient ApiDownloadHttpClient
     {
         get => field ??=
-            WuwaUtils.CreateApiHttpClient(ApiResponseAssetUrl, GameTag, AuthenticationHash, ApiOptions, Hash1);
+            WuwaUtils.CreateApiHttpClient(ApiResponseAssetUrl, GameTag, AuthenticationHash, "", Hash1);
         set;
     }
 
-    protected string ApiResponseAssetUrl { get; }
-    protected string GameTag { get; set; }
-    protected string AuthenticationHash { get; set; }
-    protected string ApiOptions { get; set; }
-    protected string Hash1 { get; set; }
+    private string ApiResponseAssetUrl { get; }
+    private string GameTag { get; set; }
+    private string ClientAccess { get; set; }
+    private string CurrentPatch { get; set; }
+    private string AuthenticationHash { get; set; }
+    private string Hash1 { get; set; }
+    private string Hash2 { get; set; }
 
     private WuwaApiResponseGameConfig? ApiGameConfigResponse { get; set; }
     private string CurrentGameExecutableByPreset { get; }
@@ -65,10 +73,9 @@ internal partial class WuwaGameManager : GameManagerBase
     private JsonObject CurrentGameConfigNode { get; set; } = new();
 
     internal string? GameResourceBaseUrl { get; set; }
-    internal string? GameResourceBasisPath { get; set; }
-    internal bool IsInitialized { get; set; }
+    private string? GameResourceBasisPath { get; set; }
+    private bool IsInitialized { get; set; }
     
-    private const string DefaultResourceUrl = "https://pcdownload-huoshan.aki-game.net/launcher/game/";
 
     protected override GameVersion CurrentGameVersion
     {
@@ -153,7 +160,8 @@ internal partial class WuwaGameManager : GameManagerBase
             return 0;
 
         string gameConfigUrl =
-            ApiResponseAssetUrl + $"/launcher/game/{GameTag}/{AuthenticationHash.AeonPlsHelpMe()}/index.json";
+            $"https://prod-alicdn-gamestarter.kurogame.com/launcher/game/{GameTag.AeonPlsHelpMe()}/" +
+            $"{AuthenticationHash.AeonPlsHelpMe()}/index.json";
 
         using HttpResponseMessage configMessage =
             await ApiResponseHttpClient.GetAsync(gameConfigUrl, HttpCompletionOption.ResponseHeadersRead, token);
@@ -177,7 +185,11 @@ internal partial class WuwaGameManager : GameManagerBase
 
         Uri gameResourceBase =
             new(ApiResponseAssetUrl);
-        GameResourceBaseUrl = $"{gameResourceBase.Scheme}://{ApiResponseAssetUrl}/launcher/game/{GameTag}/{AuthenticationHash.AeonPlsHelpMe()}/index.json";
+        GameResourceBaseUrl = $"https://{ApiResponseAssetUrl.AeonPlsHelpMe()}/launcher/game/" +
+                              $"{GameTag.AeonPlsHelpMe()}/{ClientAccess.AeonPlsHelpMe()}/{CurrentPatch}/" +
+                              $"{Hash2.AeonPlsHelpMe()}/resource.json";
+        
+        SharedStatic.InstanceLogger.LogDebug("Game Resource Base URL: {GameResourceBaseUrl}", GameResourceBaseUrl);
 
         // Set API current game version
         if (ApiGameConfigResponse.Default.ConfigReference.CurrentVersion == GameVersion.Empty)

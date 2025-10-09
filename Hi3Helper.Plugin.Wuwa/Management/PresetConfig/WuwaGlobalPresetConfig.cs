@@ -16,12 +16,13 @@ namespace Hi3Helper.Plugin.Wuwa.Management.PresetConfig;
 public partial class WuwaGlobalPresetConfig : PluginPresetConfigBase
 {
     private const string ApiResponseUrl = "https://prod-alicdn-gamestarter.kurogame.com/";
-
     private const string ApiResponseAssetUrl = "https://pcdownload-huoshan.aki-game.net/";
-    // private const string CurrentUninstKey = "";
-    private const string CurrentTag = "G153";
-    private const string CurrentPatchHash = "VlNTU1c8DAEsKzslESUCDRIQAiomLA4WKBEMIAABOQgyMSEgVAA";
-    private const string Hash1 = "VxvH4SpEIzJaYhAODsY2Yjw1TyCrdm0t";
+    private const string CurrentTag = "JFJWUA";
+    private const string ClientAccess = "VlNTVw";
+    private const string CurrentPatch = "2.6.2";
+    private const string AuthenticationHash = "VlNTU1c8DAEsKzslESUCDRIQAiomLA4WKBEMIAABOQgyMSEgVAA";
+    private const string Hash1 = "NRsVK1cwEyYqGSkCOgsiLCcQOlE6CRRSNxogEQcOUxc";
+    private const string Hash2 = "Nw4RGjQ0Jxk6EAsvMQILEDsMJAoZEAYgNg0qDSYnFwk";
     private const string ExecutableName = "WutheringWaves.exe";
     private const string VendorName = "Kuro Games";
 
@@ -79,9 +80,7 @@ public partial class WuwaGlobalPresetConfig : PluginPresetConfigBase
 
     [field: AllowNull, MaybeNull]
     public override string LauncherGameDirectoryName => field ??= "Wuthering Waves Game";
-
-    // TODO for Cry0:
-    // Please define what languages are supported on WuWa
+    
     [field: AllowNull, MaybeNull]
     public override List<string> SupportedLanguages => field ??= [
         "Japanese",
@@ -96,19 +95,19 @@ public partial class WuwaGlobalPresetConfig : PluginPresetConfigBase
 
     public override ILauncherApiMedia? LauncherApiMedia 
     {
-        get => field ??= new WuwaGlobalLauncherApiMedia(ApiResponseUrl, CurrentTag, CurrentPatchHash, "bg", Hash1);
+        get => field ??= new WuwaGlobalLauncherApiMedia(ApiResponseUrl, CurrentTag, AuthenticationHash, "bg", Hash1);
         set;
     }
 
     public override ILauncherApiNews? LauncherApiNews
     {
-        get => field ??= new WuwaGlobalLauncherApiNews(ApiResponseUrl, CurrentTag, CurrentPatchHash, "news", Hash1);
+        get => field ??= new WuwaGlobalLauncherApiNews(ApiResponseUrl, CurrentTag, AuthenticationHash, "news", Hash1);
         set;
     }
 
     public override IGameManager? GameManager
     {
-        get => field ??= new WuwaGameManager(ExecutableName, ApiResponseAssetUrl, CurrentPatchHash, CurrentTag, Hash1);
+        get => field ??= new WuwaGameManager(ExecutableName, ApiResponseAssetUrl, AuthenticationHash, CurrentTag, ClientAccess, CurrentPatch, Hash1, Hash2);
         set;
     }
 
