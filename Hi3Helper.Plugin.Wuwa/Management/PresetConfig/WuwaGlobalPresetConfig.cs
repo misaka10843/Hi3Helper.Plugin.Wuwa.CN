@@ -19,10 +19,10 @@ public partial class WuwaGlobalPresetConfig : PluginPresetConfigBase
     private const string ApiResponseAssetUrl = "https://pcdownload-huoshan.aki-game.net/";
     private const string CurrentTag = "JFJWUA";
     private const string ClientAccess = "VlNTVw";
-    private const string CurrentPatch = "2.6.2";
+    private const string CurrentPatch = "2.7.0";
     private const string AuthenticationHash = "VlNTU1c8DAEsKzslESUCDRIQAiomLA4WKBEMIAABOQgyMSEgVAA";
-    private const string Hash1 = "NRsVK1cwEyYqGSkCOgsiLCcQOlE6CRRSNxogEQcOUxc";
-    private const string Hash2 = "Nw4RGjQ0Jxk6EAsvMQILEDsMJAoZEAYgNg0qDSYnFwk";
+    private const string Hash1 = "DSQONC4ZUxIkByA1CgANJC0OJw4lNhYMIRQHB1EtJ1s";
+    private const string Hash2 = "JRUpJyABCwclGTQGMiUrOhkgOTkIIgIqBQkJMCE7JS8";
     private const string ExecutableName = "WutheringWaves.exe";
     private const string VendorName = "Kuro Games";
 
