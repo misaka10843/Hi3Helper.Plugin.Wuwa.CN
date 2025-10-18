@@ -18,7 +18,7 @@ public partial class WuwaGlobalPresetConfig : PluginPresetConfigBase
     private const string ApiResponseUrl = "https://prod-alicdn-gamestarter.kurogame.com/";
     private const string ApiResponseAssetUrl = "https://pcdownload-huoshan.aki-game.net/";
     private const string CurrentTag = "JFJWUA";
-    private const string ClientAccess = "VlNTVw";
+    private const string ClientAccess = "VlNTU1c=";
     private const string CurrentPatch = "2.7.0";
     private const string AuthenticationHash = "VlNTU1c8DAEsKzslESUCDRIQAiomLA4WKBEMIAABOQgyMSEgVAA";
     private const string Hash1 = "DSQONC4ZUxIkByA1CgANJC0OJw4lNhYMIRQHB1EtJ1s";
