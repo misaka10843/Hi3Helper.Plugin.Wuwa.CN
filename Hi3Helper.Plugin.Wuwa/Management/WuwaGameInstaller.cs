@@ -10,6 +10,7 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,6 +36,31 @@ partial class WuwaGameInstaller : GameInstallerBase
 			.AllowUntrustedCert()
 			.Create();
 	}
+
+    // Override InitAsync to initialize the installer (and avoid calling the base InitializableTask.InitAsync).
+    protected override async Task<int> InitAsync(CancellationToken token)
+    {
+        // Delegate core initialization to the manager if available, then warm the resource index cache.
+        if (GameManager is not WuwaGameManager asWuwaManager)
+            throw new InvalidOperationException("GameManager is not a WuwaGameManager and cannot initialize Wuwa installer.");
+
+        // Call manager's init logic (internal InitAsyncInner) to populate config and GameResourceBaseUrl.
+        int mgrResult = await asWuwaManager.InitAsyncInner(true, token).ConfigureAwait(false);
+
+        // Attempt to download and cache the resource index (don't fail hard if index is missing; callers handle null).
+        try
+        {
+            _currentIndex = await GetCachedIndexAsync(true, token).ConfigureAwait(false);
+        }
+        catch
+        {
+            // Ignore errors here; downstream code handles missing index gracefully.
+            _currentIndex = null;
+        }
+
+        UpdateCacheExpiration();
+        return mgrResult;
+    }
 
     protected override async Task<long> GetGameDownloadedSizeAsyncInner(GameInstallerKind gameInstallerKind, CancellationToken token)
     {
@@ -226,7 +252,8 @@ partial class WuwaGameInstaller : GameInstallerBase
         // Also enable number handling so numeric fields that are strings deserialize correctly.
         var options = new JsonSerializerOptions
         {
-            PropertyNameCaseInsensitive = true
+            PropertyNameCaseInsensitive = true,
+            NumberHandling = JsonNumberHandling.AllowReadingFromString
         };
 
         // Candidate URL generator: original + some common alternates
