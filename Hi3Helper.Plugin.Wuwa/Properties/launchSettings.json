@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Hi3Helper.Plugin.HBR": {
+    "Hi3Helper.Plugin.Wuwa": {
       "commandName": "Project",
       "nativeDebugging": true
     }
