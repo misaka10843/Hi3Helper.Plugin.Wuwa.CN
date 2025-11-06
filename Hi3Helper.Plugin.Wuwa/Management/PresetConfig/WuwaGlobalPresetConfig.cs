@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Hi3Helper.Plugin.Wuwa.Management.PresetConfig;
 [GeneratedComClass]
-public partial class WuwaGlobalPresetConfig : PluginPresetConfigBase
+public partial class WuwaGlobalPresetConfig : WuwaPresetConfig
 {
     private const string ApiResponseUrl = "https://prod-alicdn-gamestarter.kurogame.com/";
     private const string ApiResponseAssetUrl = "https://pcdownload-huoshan.aki-game.net/";
@@ -33,13 +33,16 @@ public partial class WuwaGlobalPresetConfig : PluginPresetConfigBase
 	[field: AllowNull, MaybeNull]
 	public override string GameExecutableName => field ??= Path.Combine("Client", "Binaries", "Win64", EngineExecutableName);
 
-    public override string GameAppDataPath
+    [field: AllowNull, MaybeNull]
+    public override string? StartExecutableName => field ??= ExecutableName;
+
+	public override string GameAppDataPath
     {
         get
         {
             string? gamePath = null;
             GameManager?.GetGamePath(out gamePath);
-            return string.IsNullOrEmpty(gamePath) ? string.Empty : Path.Combine(gamePath, "Client");
+            return string.IsNullOrEmpty(gamePath) ? string.Empty : Path.Combine(gamePath, "Client", "Saved");
         }
     }
     
