@@ -23,7 +23,7 @@ public partial class WuwaGlobalPresetConfig : PluginPresetConfigBase
     private const string AuthenticationHash = "VlNTU1c8DAEsKzslESUCDRIQAiomLA4WKBEMIAABOQgyMSEgVAA";
     private const string Hash1 = "DSQONC4ZUxIkByA1CgANJC0OJw4lNhYMIRQHB1EtJ1s";
     private const string Hash2 = "JRUpJyABCwclGTQGMiUrOhkgOTkIIgIqBQkJMCE7JS8";
-    private const string ExecutableName = "WutheringWaves.exe";
+    private const string ExecutableName = "Wuthering Waves.exe";
     private const string VendorName = "Kuro Games";
 
     [field: AllowNull, MaybeNull]
