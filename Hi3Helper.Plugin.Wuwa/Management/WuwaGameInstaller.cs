@@ -1,4 +1,4 @@
-﻿using Hi3Helper.Plugin.Core;
+using Hi3Helper.Plugin.Core;
 using Hi3Helper.Plugin.Core.Management;
 using Hi3Helper.Plugin.Core.Utility;
 using Hi3Helper.Plugin.Wuwa.Management.Api;
@@ -338,9 +338,10 @@ internal partial class WuwaGameInstaller : GameInstallerBase
 				SharedStatic.InstanceLogger.LogDebug("[WuwaGameInstaller::StartInstallAsyncInner] Skipping null or empty entry.");
 				continue;
 			}
-
+#if DEBUG
 			SharedStatic.InstanceLogger.LogDebug("[WuwaGameInstaller::StartInstallAsyncInner] Processing entry: Dest={Dest}, Size={Size}, Md5={Md5}, Chunks={Chunks}",
 				entry.Dest, entry.Size, entry.Md5, entry.ChunkInfos?.Length ?? 0);
+#endif
 
 			string relativePath = entry.Dest.Replace('/', Path.DirectorySeparatorChar);
 			string outputPath = Path.Combine(installPath, relativePath);
@@ -358,8 +359,6 @@ internal partial class WuwaGameInstaller : GameInstallerBase
 				try
 				{
 					var fi = new FileInfo(outputPath);
-					SharedStatic.InstanceLogger.LogDebug("[WuwaGameInstaller::StartInstallAsyncInner] File exists: {File} (len={Len})", outputPath, fi.Length);
-
 					// Prefer quick size check if index has it
 					if (entry.Size > 0)
 					{
@@ -417,7 +416,6 @@ internal partial class WuwaGameInstaller : GameInstallerBase
                     // ignored
                 }
 
-                SharedStatic.InstanceLogger.LogInformation("[WuwaGameInstaller::StartInstallAsyncInner] Skipping entry (already valid): {Dest}", entry.Dest);
 				continue;
 			}
 
@@ -893,7 +891,6 @@ internal partial class WuwaGameInstaller : GameInstallerBase
                     {
                         var fi = new FileInfo(outputPath);
                         total += fi.Length;
-                        SharedStatic.InstanceLogger.LogTrace("[WuwaGameInstaller::CalculateDownloadedBytesAsync] Counted existing file {File} len={Len}", outputPath, fi.Length);
                         continue;
                     }
                     catch (Exception ex)
