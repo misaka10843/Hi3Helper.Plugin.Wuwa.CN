@@ -612,9 +612,19 @@ internal partial class WuwaGameInstaller : GameInstallerBase
         return StartInstallAsyncInner(progressDelegate, progressStateDelegate, token);
     }
 
-    protected override Task UninstallAsyncInner(CancellationToken token)
+    protected override async Task UninstallAsyncInner(CancellationToken token)
     {
-        return Task.CompletedTask;
+        bool isInstalled;
+        GameManager.IsGameInstalled(out isInstalled);
+        if (!isInstalled)
+            return;
+
+        string? installPath;
+        GameManager.GetGamePath(out installPath);
+        if (string.IsNullOrEmpty(installPath))
+            return;
+
+        await Task.Run(() => Directory.Delete(installPath, true), token).ConfigureAwait(false);
     }
 
     public override void Dispose()
