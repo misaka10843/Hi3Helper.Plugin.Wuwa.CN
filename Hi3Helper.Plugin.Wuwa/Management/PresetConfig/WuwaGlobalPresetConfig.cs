@@ -21,7 +21,7 @@ public partial class WuwaGlobalPresetConfig : WuwaPresetConfig
     private const string ClientAccess = "VlNTU1c=";
     private const string CurrentPatch = "2.8.0";
     private const string AuthenticationHash = "VlNTU1c8DAEsKzslESUCDRIQAiomLA4WKBEMIAABOQgyMSEgVAA";
-    private const string Hash1 = "FFAMMA4BKwgaExVUC1AhLSw2NxVXVCoEFQwxBgIOFFo";
+    private const string Hash1 = "AFYCKQErMgwiMCkGJwYNESg6NywoFCAxKDYOUQ1aNCI";
     private const string Hash2 = "MzUkNzE5MwsuOw85KhUwDwEAEScWAiYkAAUONSApKwE";
     private const string ExecutableName = "Wuthering Waves.exe";
     private const string EngineExecutableName = "Client-Win64-Shipping.exe";
