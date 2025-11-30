@@ -6,6 +6,19 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      publish_profile:
+        description: 'Publish profile to use'
+        required: true
+        type: choice
+        options:
+        - ReleaseNoReflectionPublish-O1
+        - ReleaseNoReflectionPublish-O2
+        - ReleasePublish-O1
+        - ReleasePublish-O2
+        - DebugPublish
+        - DebugNoReflectionPublish
+        default: ReleaseNoReflectionPublish-O1
 
 jobs:
   build:
@@ -14,6 +27,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        submodules: true
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -26,8 +41,8 @@ jobs:
     - name: Build solution
       run: dotnet build --configuration Release --runtime win-x64 Hi3Helper.Plugin.Wuwa.sln --no-restore
 
-    - name: Publish with ReleaseNoReflectionPublish-O1 profile
-      run: dotnet publish Hi3Helper.Plugin.Wuwa/Hi3Helper.Plugin.Wuwa.csproj --configuration Release --runtime win-x64 /p:PublishProfile=ReleaseNoReflectionPublish-O1 -o ./publish
+    - name: Publish with selected profile
+      run: dotnet publish Hi3Helper.Plugin.Wuwa/Hi3Helper.Plugin.Wuwa.csproj --configuration Release --runtime win-x64 /p:PublishProfile=${{ inputs.publish_profile }} -o ./publish
 
     - name: Generate build provenance
       uses: actions/attest-build-provenance@v1
