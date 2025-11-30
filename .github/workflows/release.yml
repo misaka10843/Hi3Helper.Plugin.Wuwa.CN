@@ -80,7 +80,7 @@ jobs:
       with:
         repository: CollapseLauncher/CollapseLauncher-ReleaseRepo
         path: ./target-repo
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.RELEASE_REPO_TOKEN }}
 
     - name: Copy files to target repo
       run: |
@@ -93,7 +93,7 @@ jobs:
     - name: Create Pull Request in Release Repo
       uses: peter-evans/create-pull-request@v7
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.RELEASE_REPO_TOKEN }}
         path: ./target-repo
         branch: wuwa-plugin-release-${{ inputs.version }}
         base: main
