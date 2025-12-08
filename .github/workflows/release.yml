@@ -62,7 +62,7 @@ jobs:
       uses: orhun/git-cliff-action@v4
       with:
         config: cliff.toml
-        args: --latest --strip header
+        args: --unreleased --strip header
       id: git-cliff
 
     - name: Create Release
@@ -81,6 +81,7 @@ jobs:
         repository: CollapseLauncher/CollapseLauncher-ReleaseRepo
         path: ./target-repo
         token: ${{ secrets.RELEASE_REPO_TOKEN }}
+        fetch-depth: 0
 
     - name: Copy files to target repo
       run: |
