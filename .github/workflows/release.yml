@@ -71,7 +71,6 @@ jobs:
       uses: orhun/git-cliff-action@v4
       with:
         config: cliff.toml
-        # --tag: Sets the header title to the version we want
         # (Implicitly grabs all "unreleased" changes since v0.4.0)
         args: --tag v${{ inputs.version }} --strip header
       id: git-cliff
