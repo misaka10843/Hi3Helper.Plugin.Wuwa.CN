@@ -18,11 +18,8 @@ public partial class WuwaGlobalPresetConfig : WuwaPresetConfig
     private const string ApiResponseUrl = "https://prod-alicdn-gamestarter.kurogame.com/";
     private const string ApiResponseAssetUrl = "https://pcdownload-huoshan.aki-game.net/";
     private const string CurrentTag = "JFJWUA";
-    private const string ClientAccess = "VlNTU1c=";
-    private const string CurrentPatch = "2.8.1";
     private const string AuthenticationHash = "VlNTU1c8DAEsKzslESUCDRIQAiomLA4WKBEMIAABOQgyMSEgVAA";
     private const string Hash1 = "AFYCKQErMgwiMCkGJwYNESg6NywoFCAxKDYOUQ1aNCI";
-    private const string Hash2 = "NC4gAjcOACEVLDUXAgoqJxQOIhMgLhYOFAIoJAQbLTs";
     private const string ExecutableName = "Wuthering Waves.exe";
     private const string EngineExecutableName = "Client-Win64-Shipping.exe";
 	private const string VendorName = "Kuro Games";
@@ -112,7 +109,7 @@ public partial class WuwaGlobalPresetConfig : WuwaPresetConfig
 
     public override IGameManager? GameManager
     {
-        get => field ??= new WuwaGameManager(ExecutableName, ApiResponseAssetUrl, AuthenticationHash, CurrentTag, ClientAccess, CurrentPatch, Hash1, Hash2);
+        get => field ??= new WuwaGameManager(ExecutableName, ApiResponseAssetUrl, AuthenticationHash, CurrentTag, Hash1);
         set;
     }
 

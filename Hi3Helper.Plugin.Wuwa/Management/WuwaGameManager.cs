@@ -29,19 +29,13 @@ internal partial class WuwaGameManager : GameManagerBase
         string apiResponseAssetUrl,
         string authenticationHash,
         string gameTag,
-        string clientAccess,
-        string currentPatch,
-        string hash1,
-        string hash2)
+        string hash1)
     {
         CurrentGameExecutableByPreset = gameExecutableNameByPreset;
         AuthenticationHash = authenticationHash;
         ApiResponseAssetUrl = apiResponseAssetUrl;
         GameTag = gameTag;
-        ClientAccess = clientAccess;
-        CurrentPatch = currentPatch;
         Hash1 = hash1;
-        Hash2 = hash2;
     }
 
     [field: AllowNull, MaybeNull]
@@ -62,11 +56,8 @@ internal partial class WuwaGameManager : GameManagerBase
 
     internal string ApiResponseAssetUrl { get; }
     private string GameTag { get; set; }
-    private string ClientAccess { get; set; }
-    private string CurrentPatch { get; set; }
     private string AuthenticationHash { get; set; }
     private string Hash1 { get; set; }
-    private string Hash2 { get; set; }
 
     private WuwaApiResponseGameConfig? ApiGameConfigResponse { get; set; }
     private string CurrentGameExecutableByPreset { get; }
