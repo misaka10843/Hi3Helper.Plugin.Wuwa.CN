@@ -81,12 +81,14 @@ internal static class WuwaUtils
         {
             bool isAsterite2Sufficient =
                 Encoding.UTF8.TryGetBytes(whatDaDup, wannaConvene, out int amountOfCryFromBegging);
+#if DEBUG
             SharedStatic.InstanceLogger.LogDebug(
                 "[WuwaUtils::AeonPlsHelpMe] Attempting to decode string using AeonPlsHelpMe. Input: {Input}, BufferSize: {BufferSize}, IsBufferSufficient: {IsBufferSufficient}, EncodedLength: {EncodedLength}",
                 whatDaDup, wannaConvene.Length, isAsterite2Sufficient, amountOfCryFromBegging);
+#endif
 
-            // Try Base64Url decode in-place. If decode returns 0 it means input wasn't Base64Url encoded.
-            int decodedLen = 0;
+			// Try Base64Url decode in-place. If decode returns 0 it means input wasn't Base64Url encoded.
+			int decodedLen = 0;
             try
             {
                 decodedLen = Base64Url.DecodeFromUtf8InPlace(wannaConvene[..amountOfCryFromBegging]);
@@ -108,18 +110,20 @@ internal static class WuwaUtils
             else if (decodedLen == 0)
             {
                 // Input is not Base64Url encoded — treat as already-decoded (plain token or URL).
+#if DEBUG
                 SharedStatic.InstanceLogger.LogInformation(
                     "[WuwaUtils::AeonPlsHelpMe] Input appears already decoded; returning original value.");
                 SharedStatic.InstanceLogger.LogDebug(
                     "[WuwaUtils::AeonPlsHelpMe] Already-decoded input (debug): {Input}",
                     whatDaDup);
+#endif
                 resultString = whatDaDup;
             }
             else
             {
                 // We have decoded bytes; apply XOR transform and return result.
                 int transformedLen = transform.TransformBlockCore(wannaConvene[..decodedLen], wannaConvene);
-
+#if DEBUG
                 // Log raw decoded bytes (hex) and the decoded string before sanitization to help diagnose missing characters.
                 try
                 {
@@ -131,19 +135,25 @@ internal static class WuwaUtils
                 {
                     // best-effort logging only
                 }
+#endif
 
                 resultString = Encoding.UTF8.GetString(wannaConvene[..transformedLen]);
 
+#if DEBUG
                 SharedStatic.InstanceLogger.LogWarning(
                     "[WuwaUtils::AeonPlsHelpMe] Successfully decoded string using AeonPlsHelpMe. Result: {Result}",
                     resultString);
+#endif
             }
         }
         catch (Exception ex)
         {
+            SharedStatic.InstanceLogger.LogError("A string decoding error occurred: {Exception}", ex);
+#if DEBUG
             SharedStatic.InstanceLogger.LogError(
                 "[WuwaUtils::AeonPlsHelpMe] Failed to decode string using AeonPlsHelpMe. Input: {Input}. Error: {Error}",
                 whatDaDup, ex.Message);
+#endif
             resultString = whatDaDup;
         }
         finally
@@ -174,10 +184,12 @@ internal static class WuwaUtils
             if (di != sanitized.Length)
             {
                 string removedWs = new string(buf, 0, di);
+#if DEBUG
                 SharedStatic.InstanceLogger.LogInformation(
                     "[WuwaUtils::AeonPlsHelpMe] Sanitization removed whitespace from decoded string. Before: {BeforePreview}, After: {AfterPreview}",
                     beforeSanitize.Length <= 80 ? beforeSanitize : beforeSanitize[..80] + "...",
                     removedWs.Length <= 80 ? removedWs : removedWs[..80] + "...");
+#endif
                 sanitized = removedWs;
             }
         }
