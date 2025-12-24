@@ -164,12 +164,12 @@ public partial class Exports
 		}
 
 		wuwaGameManager.GetGamePath(out string? gamePath);
-		string? executablePath = presetConfig.StartExecutableName;
+		presetConfig.comGet_GameExecutableName(out string executablePath);
 
 		gamePath?.NormalizePathInplace();
-		executablePath?.NormalizePathInplace();
+		executablePath.NormalizePathInplace();
 
-		if (string.IsNullOrEmpty(gamePath) || string.IsNullOrEmpty(executablePath))
+		if (string.IsNullOrEmpty(gamePath))
 		{
 			return false;
 		}
