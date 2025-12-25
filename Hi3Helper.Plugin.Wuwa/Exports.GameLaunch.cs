@@ -67,14 +67,17 @@ public partial class Exports
 		isGameRunning = false;
 		gameStartTime = default;
 
-		if (!TryGetGameExecutablePath(context, out string? gameExecutablePath))
+		string? startingExecutablePath, gameExecutablePath = null;
+		if (!TryGetStartingExecutablePath(context, out startingExecutablePath)
+			&& !TryGetStartingExecutablePath(context, out gameExecutablePath))
 		{
 			return true;
 		}
 
-		using Process? process = FindExecutableProcess(gameExecutablePath);
-		isGameRunning = process != null;
-		gameStartTime = process?.StartTime ?? default;
+		using Process? process = startingExecutablePath != null ? FindExecutableProcess(startingExecutablePath) : null;
+		using Process? gameProcess = gameExecutablePath != null ? FindExecutableProcess(gameExecutablePath) : null;
+		isGameRunning = process != null || gameProcess != null;
+		gameStartTime = process?.StartTime ?? gameProcess?.StartTime ?? default;
 
 		return true;
 	}
@@ -86,18 +89,21 @@ public partial class Exports
 
 		async Task<bool> Impl()
 		{
-			if (!TryGetGameExecutablePath(context, out string? gameExecutablePath))
-			{
-				return false;
-			}
-
-			using Process? process = FindExecutableProcess(gameExecutablePath);
-			if (process == null)
+			string? startingExecutablePath, gameExecutablePath = null;
+			if (!TryGetStartingExecutablePath(context, out startingExecutablePath)
+				&& !TryGetStartingExecutablePath(context, out gameExecutablePath))
 			{
 				return true;
 			}
 
-			await process.WaitForExitAsync(token);
+			using Process? process = startingExecutablePath != null ? FindExecutableProcess(startingExecutablePath) : null;
+			using Process? gameProcess = gameExecutablePath != null ? FindExecutableProcess(gameExecutablePath) : null;
+
+			if (gameProcess != null)
+				await gameProcess.WaitForExitAsync(token);
+			else if (process != null)
+				await process.WaitForExitAsync(token);
+
 			return true;
 		}
 	}
@@ -127,6 +133,8 @@ public partial class Exports
 
 	private static Process? FindExecutableProcess(string executablePath)
 	{
+		if (executablePath is null) return null;
+
 		ReadOnlySpan<char> executableDirPath = Path.GetDirectoryName(executablePath.AsSpan());
 		string executableName = Path.GetFileNameWithoutExtension(executablePath);
 
