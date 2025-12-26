@@ -72,7 +72,8 @@ public partial class Exports
 		isGameRunning = false;
 		gameStartTime = default;
 
-		string? startingExecutablePath, gameExecutablePath = null;
+		string? startingExecutablePath = null;
+		string? gameExecutablePath = null;
 		if (!TryGetStartingExecutablePath(context, out startingExecutablePath)
 			&& !TryGetStartingExecutablePath(context, out gameExecutablePath))
 		{
@@ -82,7 +83,7 @@ public partial class Exports
 		using Process? process = startingExecutablePath != null ? FindExecutableProcess(startingExecutablePath) : null;
 		using Process? gameProcess = gameExecutablePath != null ? FindExecutableProcess(gameExecutablePath) : null;
 		isGameRunning = process != null || gameProcess != null;
-		gameStartTime = process?.StartTime ?? gameProcess?.StartTime ?? default;
+		gameStartTime = process?.StartTime ?? gameProcess?.StartTime ?? SteamStartTime ?? EpicStartTime ?? default;
 
 		return true;
 	}
@@ -94,11 +95,11 @@ public partial class Exports
 
 		async Task<bool> Impl()
 		{
-			string? startingExecutablePath, gameExecutablePath = null;
-			if (!TryGetStartingExecutablePath(context, out startingExecutablePath)
-				&& !TryGetStartingExecutablePath(context, out gameExecutablePath))
+			while (IsSteamLoading)
 			{
-				return true;
+				SharedStatic.InstanceLogger.LogDebug("[Wuwa::WaitRunningGameCoreAsync()] Waiting 200ms because Steam is loading...");
+				await Task.Delay(200, token);
+			}
 			}
 
 			using Process? process = startingExecutablePath != null ? FindExecutableProcess(startingExecutablePath) : null;
@@ -217,7 +218,7 @@ public partial class Exports
 		}
 
 		wuwaGameManager.GetGamePath(out string? gamePath);
-		string? executablePath = presetConfig?.StartExecutableName;
+		string? executablePath = presetConfig?.EngineExecutableName;
 
 		gamePath?.NormalizePathInplace();
 		executablePath?.NormalizePathInplace();
