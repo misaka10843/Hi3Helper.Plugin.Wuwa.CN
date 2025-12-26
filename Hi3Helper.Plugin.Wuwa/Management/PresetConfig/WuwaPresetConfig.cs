@@ -7,5 +7,4 @@ namespace Hi3Helper.Plugin.Wuwa.Management.PresetConfig;
 public abstract partial class WuwaPresetConfig : PluginPresetConfigBase
 {
 	public abstract string? StartExecutableName { get; }
-	public abstract string? EngineExecutableName { get; }
 }

@@ -23,7 +23,7 @@ public partial class WuwaEpicPresetConfig : WuwaGlobalPresetConfig
 
 	public override IGameManager? GameManager
 	{
-		get => field ??= new WuwaGameManager(EngineExecutableName, ApiResponseAssetUrl, AuthenticationHash, CurrentTag, Hash1);
+		get => field ??= new WuwaGameManager(ExecutableName, ApiResponseAssetUrl, AuthenticationHash, CurrentTag, Hash1);
 		set;
 	}
 

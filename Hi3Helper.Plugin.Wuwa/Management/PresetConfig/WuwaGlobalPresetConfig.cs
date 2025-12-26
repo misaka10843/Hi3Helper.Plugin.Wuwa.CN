@@ -20,8 +20,8 @@ public partial class WuwaGlobalPresetConfig : WuwaPresetConfig
     protected const string CurrentTag = "JFJWUA";
     protected const string AuthenticationHash = "VlNTU1c8DAEsKzslESUCDRIQAiomLA4WKBEMIAABOQgyMSEgVAA";
     protected const string Hash1 = "DBAwDDtQUDsiOi4bIFFUUVUnNzoaARURLlQVKSEyFAo";
-    private const string ExecutableName = "Wuthering Waves.exe";
-    //protected const string EngineExecutableName = "Client-Win64-Shipping.exe";
+    protected const string ExecutableName = "Wuthering Waves.exe";
+    private const string EngineExecutableName = "Client-Win64-Shipping.exe";
 	private const string VendorName = "Kuro Games";
 
     [field: AllowNull, MaybeNull]
@@ -119,7 +119,5 @@ public partial class WuwaGlobalPresetConfig : WuwaPresetConfig
         set;
     }
 
-	public override string? EngineExecutableName => "Client-Win64-Shipping.exe";
-
-	protected override Task<int> InitAsync(CancellationToken token) => Task.FromResult(0);
+    protected override Task<int> InitAsync(CancellationToken token) => Task.FromResult(0);
 }

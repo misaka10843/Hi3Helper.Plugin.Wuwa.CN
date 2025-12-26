@@ -106,7 +106,15 @@ public partial class Exports
 				SharedStatic.InstanceLogger.LogDebug("[Wuwa::WaitRunningGameCoreAsync()] Waiting 200ms because Steam is loading...");
 				await Task.Delay(200, token);
 			}
+
+			while (IsEpicLoading)
+			{
+				SharedStatic.InstanceLogger.LogDebug("[Wuwa::WaitRunningGameCoreAsync()] Waiting 200ms because Epic is loading...");
+				await Task.Delay(200, token);
 			}
+
+			string? startingExecutablePath = null;
+			string? gameExecutablePath = null;
 
 			using Process? process = startingExecutablePath != null ? FindExecutableProcess(startingExecutablePath) : null;
 			using Process? gameProcess = gameExecutablePath != null ? FindExecutableProcess(gameExecutablePath) : null;
@@ -224,7 +232,7 @@ public partial class Exports
 		}
 
 		wuwaGameManager.GetGamePath(out string? gamePath);
-		string? executablePath = presetConfig?.EngineExecutableName;
+		string? executablePath = presetConfig?.StartExecutableName;
 
 		gamePath?.NormalizePathInplace();
 		executablePath?.NormalizePathInplace();
