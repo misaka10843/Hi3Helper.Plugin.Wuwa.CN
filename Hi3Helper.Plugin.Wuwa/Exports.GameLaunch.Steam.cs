@@ -1,5 +1,7 @@
-﻿using Hi3Helper.Plugin.Core.Utility;
+﻿using Hi3Helper.Plugin.Core;
+using Hi3Helper.Plugin.Core.Utility;
 using Hi3Helper.Plugin.Wuwa.Management.PresetConfig;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -27,6 +29,8 @@ public partial class Exports
 			return true;
 		}
 
+		SharedStatic.InstanceLogger.LogDebug($"Initializing Steam Launcher...");
+
 		IsSteamLoading = true;
 		SteamStartTime = DateTime.Now;
 
@@ -38,11 +42,13 @@ public partial class Exports
 		};
 		Process.Start(psi);
 
+		SharedStatic.InstanceLogger.LogDebug($"Started Steam process...");
+
 		// Find main process for Steam
 		int delay = 0;
 		while (SteamProcesses.Length == 0 && delay < 15000)
 		{
-			SteamProcesses = Process.GetProcessesByName("Steam");
+			SteamProcesses = Process.GetProcessesByName("steamwebhelper");
 
 			await Task.Delay(200, token);
 			delay += 200;
@@ -50,18 +56,39 @@ public partial class Exports
 
 		if (SteamProcesses.Length > 0)
 		{
-			Process p = SteamProcesses.First();
+			foreach (Process p1 in SteamProcesses)
+			{
+				p1.Refresh();
+				if (p1.MainWindowHandle != IntPtr.Zero)
+				{
+					SharedStatic.InstanceLogger.LogDebug($"Found Steam main window handle: {p1.MainWindowHandle}");
+					while (!WaitForMainHandle(p1, token).Result)
+					{
+						await Task.Delay(200, token);
+					}
+					break;
+				}
+			}
+		}
+
+		async static Task<bool> WaitForMainHandle(Process p, CancellationToken token)
+		{
 			while (p.MainWindowHandle == IntPtr.Zero)
 			{
 				p.Refresh();
-				await Task.Delay(100, token);
+				await Task.Delay(200, token);
 			}
-
 			// Minimize Steam window
 			ShowWindow(p.MainWindowHandle, SW_MINIMIZE);
+
+			return true;
 		}
 
+
 		IsSteamLoading = false;
+		SharedStatic.InstanceLogger.LogDebug($"Steam should be done loading by now...");
+
+		_ = WaitRunningGameCoreAsync(context, token);
 
 		return true;
 	}
