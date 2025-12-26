@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Hi3Helper.Plugin.Wuwa.Management.PresetConfig;
+using Hi3Helper.Plugin.Core;
 
 namespace Hi3Helper.Plugin.Wuwa;
 
@@ -23,6 +24,11 @@ public partial class Exports
 		async Task<bool> Impl()
 		{
 			if (!await TryInitializeSteamLauncher(context, token))
+			{
+				return false;
+			}
+
+			if (!await TryInitializeEpicLauncher(context, token))
 			{
 				return false;
 			}
