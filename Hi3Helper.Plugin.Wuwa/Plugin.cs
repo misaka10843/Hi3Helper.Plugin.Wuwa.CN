@@ -42,13 +42,11 @@ public partial class WuwaPlugin : PluginBase
 
     public override void GetPluginSelfUpdater(out IPluginSelfUpdate selfUpdate) => selfUpdate = _selfUpdaterInstance ??= new WuwaPluginSelfUpdate();
 
-    private const string _getPluginAppIconUrl =
-        "https://play-lh.googleusercontent.com/g-47eiWo7LYLBFOQrYNzjrsTf4HRzUT--lSGrqJ9BPJFV72FEdYo5rSMI6AXBDyzrA";
+    private string? _getPluginAppIconUrl;
 
-    public override void GetPluginAppIconUrl(out string result) => result = _getPluginAppIconUrl;
+    public override void GetPluginAppIconUrl(out string result) => result = _getPluginAppIconUrl ??= Convert.ToBase64String(WuwaImageData.WuwaAppIconData);
 
-    private const string _getNotificationPosterUrl =
-        "https://raw.githubusercontent.com/CollapseLauncher/CollapseLauncher-ReleaseRepo/refs/heads/main/metadata/game_posters/poster_wuwa.png";
+    private string? _getNotificationPosterUrl;
 
-    public override void GetNotificationPosterUrl(out string result) => result = _getNotificationPosterUrl;
+	public override void GetNotificationPosterUrl(out string result) => result = _getNotificationPosterUrl ??= Convert.ToBase64String(WuwaImageData.WuwaPosterData);
 }
